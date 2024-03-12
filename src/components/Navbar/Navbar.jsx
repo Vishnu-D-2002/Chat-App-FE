@@ -16,16 +16,16 @@ function Navlink() {
     <div>
       {" "}
       <nav>
-        <h2>CRM</h2>
+        <h2>CHAT APP</h2>
         <ul style={{ display: menu ? "block" : "none" }} onClick={handleMenu}>
           <li>
             <Link to="/">Login</Link>
           </li>
           <li>
-            <Link to="/dashboard">Profile</Link>
+            <Link to="/chat">Dashboard</Link>
           </li>
           <li>
-            <Link to="/reset-password">Change password</Link>
+            <Link to="/password-reset">Change password</Link>
           </li>
           <li>
             <button onClick={handlelogout}>

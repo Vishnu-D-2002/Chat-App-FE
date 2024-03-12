@@ -59,7 +59,7 @@ const Login = () => {
         const email = signupData.email;
 
         const activationMail = await authInstance.post(
-          `/active-link/${email}`,
+          `/link/${email}`,
           { email }
         );
         if (activationMail) {
@@ -187,7 +187,7 @@ const Login = () => {
                   </button>
                 )}
                 <h3>
-                  <Link to="/reset-password" className="mx-3">
+                  <Link to="/password-reset" className="mx-3">
                     Reset Password
                   </Link>
                 </h3>
