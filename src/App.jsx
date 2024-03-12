@@ -1,48 +1,27 @@
-import "./App.css";
-import io from "socket.io-client";
-import { useState } from "react";
-import Chat from "./Chat";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Chat from "./components/Chat";
+import Login from "./components/login";
 
-const socket = io.connect("http://localhost:3000");
-
-function App() {
-  const [username, setUsername] = useState("");
-  const [room, setRoom] = useState("");
-  const [showChat, setShowChat] = useState(false);
-
-  const joinRoom = () => {
-    if (username !== "" && room !== "") {
-      socket.emit("join_room", room);
-      setShowChat(true);
-    }
-  };
+const App = () => {
+  
 
   return (
-    <div className="App">
-      {!showChat ? (
-        <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
-          <input
-            type="text"
-            placeholder="John..."
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
+    <Router>
+      <div>
+        <Routes>
+          <Route
+            path="/chat"
+            element={<Chat/>}
           />
-          <input
-            type="text"
-            placeholder="Room ID..."
-            onChange={(event) => {
-              setRoom(event.target.value);
-            }}
+          <Route
+            path="/"
+            element={ <Login />}
           />
-          <button onClick={joinRoom}>Join A Room</button>
-        </div>
-      ) : (
-        <Chat socket={socket} username={username} room={room} />
-      )}
-    </div>
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

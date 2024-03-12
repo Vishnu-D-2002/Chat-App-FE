@@ -1,199 +1,414 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
-.App {
-    width: 100vw;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.color {
+    margin: 0;
+    font-family: Roboto, -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+    /* background: #3b4465; */
     height: 100vh;
-    background: #fff;
-    color: #212121;
-    font-family: "Open Sans", sans-serif;
-    display: grid;
-    place-items: center;
+    width: 100vw;
 }
 
-body {
-    margin: 0%;
-    padding: 0%;
-}
-
-
-.joinChatContainer {
+.forms-section {
     display: flex;
     flex-direction: column;
-    text-align: center;
-}
-
-.joinChatContainer h3 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.joinChatContainer input {
-    width: 210px;
-    height: 40px;
-    margin: 7px;
-    border: 2px solid #43a047;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 16px;
-}
-
-.joinChatContainer button {
-    width: 225px;
-    height: 50px;
-    margin: 7px;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 16px;
-    background: #43a047;
-    color: #fff;
-    cursor: pointer;
-}
-
-.joinChatContainer button:hover {
-    background: #2e7d32;
-}
-
-.chat-window {
-    width: 300px;
-    height: 420px;
-}
-
-.chat-window p {
-    margin: 0;
-}
-
-.chat-window .chat-header {
-    height: 45px;
-    border-radius: 6px;
-    background: #263238;
-    position: relative;
-    cursor: pointer;
-}
-
-.chat-window .chat-header p {
-    display: block;
-    padding: 0 1em 0 2em;
-    color: #fff;
-    font-weight: 700;
-    line-height: 45px;
-}
-
-.chat-window .chat-body {
-    height: calc(450px - (45px + 70px));
-    border: 1px solid #263238;
-    background: #fff;
-
-    position: relative;
-}
-
-.chat-window .chat-body .message-container {
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.chat-window .chat-body .message-container::-webkit-scrollbar {
-    display: none;
-}
-
-.chat-window .chat-body .message {
-    height: auto;
-    padding: 10px;
-    display: flex;
-}
-
-.chat-window .chat-body .message .message-content {
-    width: auto;
-    height: auto;
-    min-height: 40px;
-    max-width: 120px;
-    background-color: #43a047;
-    border-radius: 5px;
-    color: white;
-    display: flex;
+    justify-content: center;
     align-items: center;
-    margin-right: 5px;
-    margin-left: 5px;
-    padding-right: 5px;
-    padding-left: 5px;
-    overflow-wrap: break-word;
-    word-break: break-word;
 }
 
-#you {
-    justify-content: flex-start;
+.section-title {
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: #fff;
 }
 
-#you .message-content {
-    justify-content: flex-start;
-}
-
-#you .message-meta {
-    justify-content: flex-start;
-    margin-left: 5px;
-}
-
-#other {
-    justify-content: flex-end;
-}
-
-#other .message-content {
-    justify-content: flex-end;
-    background-color: cornflowerblue;
-}
-
-#other .message-meta {
-    justify-content: flex-end;
-    margin-right: 5px;
-}
-
-.message-meta #author {
-    margin-left: 10px;
-    font-weight: bold;
-}
-
-.chat-window .chat-body .message .message-meta {
+.forms {
     display: flex;
-    font-size: 12px;
+    align-items: flex-start;
+    margin-top: 30px;
 }
 
-.chat-window .chat-footer {
-    height: 40px;
-    border: 1px solid #263238;
-    border-top: none;
-    display: flex;
+.form-wrapper {
+    animation: hideLayer .3s ease-out forwards;
 }
 
-.chat-window .chat-footer input {
-    height: 100%;
-    flex: 85%;
-    border: 0;
-    padding: 0 0.7em;
-    font-size: 1em;
-    border-right: 1px dotted #607d8b;
-
-    outline: none;
-    font-family: "Open Sans", sans-serif;
+.form-wrapper.is-active {
+    animation: showLayer .3s ease-in forwards;
 }
 
-.chat-window .chat-footer button {
-    border: 0;
-    display: grid;
-    place-items: center;
+@keyframes showLayer {
+    50% {
+        z-index: 1;
+    }
+
+    100% {
+        z-index: 1;
+    }
+}
+
+@keyframes hideLayer {
+    0% {
+        z-index: 1;
+    }
+
+    49.999% {
+        z-index: 1;
+    }
+}
+
+.switcher {
+    position: relative;
     cursor: pointer;
-    flex: 15%;
-    height: 100%;
-    background: transparent;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0;
+    text-transform: uppercase;
+    font-family: inherit;
+    font-size: 16px;
+    letter-spacing: .5px;
+    color: #999;
+    background-color: transparent;
+    border: none;
     outline: none;
-    font-size: 25px;
-    color: lightgray;
+    transform: translateX(0);
+    transition: all .3s ease-out;
 }
 
-.chat-window .chat-footer button:hover {
-    color: #43a047;
+.form-wrapper.is-active .switcher-login {
+    color: #fff;
+    transform: translateX(90px);
 }
 
-.hide {
-    opacity: 0 !important;
+.form-wrapper.is-active .switcher-signup {
+    color: #fff;
+    transform: translateX(-90px);
+}
+
+.underline {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    width: 100%;
+    height: 2px;
+}
+
+.underline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: inherit;
+    display: block;
+    width: inherit;
+    height: inherit;
+    background-color: currentColor;
+    transition: transform .2s ease-out;
+}
+
+.switcher-login .underline::before {
+    transform: translateX(101%);
+}
+
+.switcher-signup .underline::before {
+    transform: translateX(-101%);
+}
+
+.form-wrapper.is-active .underline::before {
+    transform: translateX(0);
+}
+
+.form {
+    overflow: hidden;
+    min-width: 260px;
+    margin-top: 50px;
+    padding: 30px 25px;
+    border-radius: 5px;
+    transform-origin: top;
+}
+
+.form-login {
+    animation: hideLogin .3s ease-out forwards;
+}
+
+.form-wrapper.is-active .form-login {
+    animation: showLogin .3s ease-in forwards;
+}
+
+@keyframes showLogin {
+    0% {
+        background: #d7e7f1;
+        transform: translate(40%, 10px);
+    }
+
+    50% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        background-color: #fff;
+        transform: translate(35%, -20px);
+    }
+}
+
+@keyframes hideLogin {
+    0% {
+        background-color: #fff;
+        transform: translate(35%, -20px);
+    }
+
+    50% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        background: #d7e7f1;
+        transform: translate(40%, 10px);
+    }
+}
+
+.form-signup {
+    animation: hideSignup .3s ease-out forwards;
+}
+
+.form-wrapper.is-active .form-signup {
+    animation: showSignup .3s ease-in forwards;
+}
+
+@keyframes showSignup {
+    0% {
+        background: #d7e7f1;
+        transform: translate(-40%, 10px) scaleY(.8);
+    }
+
+    50% {
+        transform: translate(0, 0) scaleY(.8);
+    }
+
+    100% {
+        background-color: #fff;
+        transform: translate(-35%, -20px) scaleY(1);
+    }
+}
+
+@keyframes hideSignup {
+    0% {
+        background-color: #fff;
+        transform: translate(-35%, -20px) scaleY(1);
+    }
+
+    50% {
+        transform: translate(0, 0) scaleY(.8);
+    }
+
+    100% {
+        background: #d7e7f1;
+        transform: translate(-40%, 10px) scaleY(.8);
+    }
+}
+
+.form fieldset {
+    position: relative;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    transition: all .3s ease-out;
+}
+
+.form-login fieldset {
+    transform: translateX(-50%);
+}
+
+.form-signup fieldset {
+    transform: translateX(50%);
+}
+
+.form-wrapper.is-active fieldset {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity .4s ease-in, transform .35s ease-in;
+}
+
+.form legend {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip: rect(0 0 0 0);
+}
+
+.input-block {
+    margin-bottom: 20px;
+}
+
+.input-block label {
+    font-size: 14px;
+}
+
+.input-block input {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size: 16px;
+    line-height: 40px;
+    color: #3b4465;
+    background: #eef9fe;
+    border: 1px solid #cddbef;
+    border-radius: 2px;
+}
+
+.form [type='submit'] {
+    opacity: 0;
+    display: block;
+    min-width: 120px;
+    margin: 30px auto 10px;
+    font-size: 18px;
+    line-height: 40px;
+    border-radius: 25px;
+    border: none;
+    transition: all .3s ease-out;
+}
+
+.form-wrapper.is-active .form [type='submit'] {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all .4s ease-in;
+}
+
+.btn-login {
+    color: #fbfdff;
+    background: #76d440;
+    box-shadow: inset 0 0 0 2px #a7e245;
+    transform: translateX(-30%);
+}
+
+.btn-signup {
+    color: whitesmoke;
+    background: #76d440;
+    box-shadow: inset 0 0 0 2px #a7e245;
+    transform: translateX(30%);
+}
+
+.btn-signup:hover,
+.btn-login:hover {
+    background-color: #0dfc1d;
+    cursor: pointer;
+    color: #fff;
+}
+
+.class1 {
+    text-indent: 35px;
+    margin-left: 7px;
+}
+
+.full {
+    margin-top: 60px;
+}
+
+.allclass {
+    margin-top: 20px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    height: 400px;
+}
+
+.content {
+    width: 80%;
+    margin-top: 20px;
+}
+
+.ti {
+    font-size: large;
+    font-weight: 700;
+}
+
+.head {
+    font-size: larger;
+    color: rgb(255, 106, 0);
+    font-weight: 700;
+}
+
+.quary {
+    width: 500px;
+}
+
+.btn-create {
+    width: 200px;
+}
+
+.create {
+    margin-top: 20px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 550px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.textbox {
+    width: 80%;
+}
+
+.card-task {
+    margin-left: 30px;
+}
+
+.card-btn {
+    width: 150px;
+}
+
+.card-task input {
+    margin-left: 20px;
+    margin-top: 10px;
+    width: 80%;
+}
+
+@media screen and (max-width: 780px) {
+    .allclass {
+        margin: 20px;
+    }
+
+    .content {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .create {
+        width: 350px;
+    }
+
+    .textbox {
+        width: 80%;
+    }
+
+    .btn-create {
+        width: 100px;
+        margin: 15px;
+    }
+}
+
+.product-img {
+    width: 200px;
+    height: 190px;
+}
+
+.des {
+    margin-top: -15px;
+    text-indent: 50px;
+    text-align: justify;
+    color: #667370;
 }
