@@ -3,12 +3,15 @@ import axios from "axios";
 
 const UserList = ({ onSelectUser }) => {
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        let user =JSON.parse (sessionStorage.getItem('User'))
+        let user = JSON.parse(sessionStorage.getItem("User"));
         let userId = user.user._id;
-        const response = await axios.get(`http://localhost:3000/users/${userId}`);   
+        const response = await axios.get(
+          `http://localhost:3000/users/${userId}`
+        );
         setUsers(response.data.users);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -19,11 +22,15 @@ const UserList = ({ onSelectUser }) => {
   }, []);
 
   return (
-    <div>
-      <h2>User List</h2>
-      <ul>
+    <div className="container ">
+      <h2 className="mt-4 mb-3">Users</h2>
+      <ul className="list-group">
         {users.map((user) => (
-          <li key={user._id} onClick={() => onSelectUser(user)}>
+          <li
+            key={user._id}
+            className="list-group-item list-group-item-action"
+            onClick={() => onSelectUser(user)}
+          >
             {user.name}
           </li>
         ))}
