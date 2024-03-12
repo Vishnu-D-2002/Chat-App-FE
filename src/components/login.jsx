@@ -89,7 +89,6 @@ const Login = () => {
     try {
       const user = await authInstance.post("/login", loginData);
       sessionStorage.setItem("User", JSON.stringify(user.data));
-      console.log(user.data);
       setLoading(false);
       setMsg1(user.data.message);
       console.log("login Done", user.data);

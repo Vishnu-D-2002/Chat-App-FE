@@ -6,7 +6,9 @@ const UserList = ({ onSelectUser }) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/users");
+        let user =JSON.parse (sessionStorage.getItem('User'))
+        let userId = user.user._id;
+        const response = await axios.get(`http://localhost:3000/users/${userId}`);   
         setUsers(response.data.users);
       } catch (error) {
         console.error("Error fetching users:", error);
