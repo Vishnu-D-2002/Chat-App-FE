@@ -10,7 +10,7 @@ const UserList = ({ onSelectUser }) => {
         let user = JSON.parse(sessionStorage.getItem("User"));
         let userId = user.user._id;
         const response = await axios.get(
-          `http://localhost:3000/users/${userId}`
+          `https://chat-app-be-78gg.onrender.com/users/${userId}`
         );
         setUsers(response.data.users);
       } catch (error) {

@@ -7,7 +7,7 @@ import moment from "moment";
 import "../App.css";
 import Navlink from "./Navbar/Navbar";
 
-const socket = io.connect("http://localhost:3000");
+const socket = io.connect("https://chat-app-be-78gg.onrender.com/");
 
 const Chat = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -47,7 +47,7 @@ const Chat = () => {
       try {
         if (currentUser && selectedUser) {
           const response = await axios.get(
-            `http://localhost:3000/msg/${currentUser}/${selectedUser._id}`
+            `https://chat-app-be-78gg.onrender.com/msg/${currentUser}/${selectedUser._id}`
           );
           setMessages(response.data);
         }

@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://localhost:3000/";
+const baseURL = "https://chat-app-be-78gg.onrender.com/";
 
 const authInstance = axios.create({
   baseURL: baseURL,
