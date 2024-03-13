@@ -3,9 +3,8 @@ import axios from "axios";
 import io from "socket.io-client";
 import UserList from "./UserList";
 import ScrollToBottom from "react-scroll-to-bottom";
-import TimeAgo from "react-timeago"; 
 import moment from "moment";
-import '../App.css'
+import "../App.css";
 import Navlink from "./Navbar/Navbar";
 
 const socket = io.connect("http://localhost:3000");
@@ -88,6 +87,15 @@ const Chat = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const renderTimeAgo = (createdAt) => {
+    const diffInSeconds = moment().diff(moment(createdAt), "seconds");
+    if (diffInSeconds < 60) {
+      return "just now";
+    } else {
+      return moment(createdAt).fromNow();
+    }
+  };
+
   return (
     <div className="container bg-dark-subtle">
       <Navlink />
@@ -126,9 +134,7 @@ const Chat = () => {
                         </div>
                         <br />
                         <div className="text-end">
-                          <sub>
-                            <TimeAgo date={moment(message.createdAt)} />
-                          </sub>
+                          <sub>{renderTimeAgo(message.createdAt)}</sub>
                         </div>
                       </div>
                     </div>
