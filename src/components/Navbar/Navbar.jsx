@@ -12,17 +12,14 @@ function Navlink() {
     sessionStorage.removeItem("User");
     navigate("/");
   };
+
   return (
-    <div>
-      {" "}
+    <div className="mt-1">
       <nav>
         <h2>CHAT APP</h2>
         <ul style={{ display: menu ? "block" : "none" }} onClick={handleMenu}>
           <li>
-            <Link to="/">Login</Link>
-          </li>
-          <li>
-            <Link to="/chat">Dashboard</Link>
+            <Link to="/chat">Chats</Link>
           </li>
           <li>
             <Link to="/password-reset">Change password</Link>

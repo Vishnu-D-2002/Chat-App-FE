@@ -1,54 +1,51 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import OtherUsers from "./OtherUsers";
 
-const UserList = ({ onSelectUser }) => {
-  const [usersWithMessages, setUsersWithMessages] = useState([]);
+const OtherUsers = ({ onSelectUser }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [allUsers, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   useEffect(() => {
-    const fetchUsersWithMessages = async () => {
-      try {
-        let user = JSON.parse(sessionStorage.getItem("User"));
-        let userId = user.user._id;
+    const fetchAllUsers = async () => {
+        try {
+          const userId=JSON.parse(sessionStorage.getItem('User'))
         const response = await axios.get(
-          `https://chat-app-be-78gg.onrender.com/users/with-messages/${userId}`
+          `https://chat-app-be-78gg.onrender.com/users/${userId.user._id}`
         );
-        setUsersWithMessages(response.data.usersWithMessages);
+        setAllUsers(response.data.users);
       } catch (error) {
-        console.error("Error fetching users with messages:", error);
+        console.error("Error fetching all users:", error);
       }
     };
 
-    fetchUsersWithMessages();
+    fetchAllUsers();
   }, []);
 
   useEffect(() => {
     setFilteredUsers(
-      usersWithMessages.filter((user) =>
+      allUsers.filter((user) =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
-  }, [searchTerm, usersWithMessages]);
+  }, [searchTerm, allUsers]);
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
   return (
-    <div className="container">
-      <OtherUsers onSelectUser={onSelectUser} />
-      <h2 className="mt-4 mb-3">ChatedUsers</h2>
+    <div>
+      <h3  className="mt-2">All Users</h3>
       <input
         type="text"
         style={{ border: "3px solid" }}
         className="form-control mb-3"
-        placeholder="Search chated users..."
+        placeholder="Find users..."
         value={searchTerm}
         onChange={handleInputChange}
       />
-      <ul className="list-group mb-3">
+      <ul className="list-group mb-3" style={{maxHeight:'250px',overflowY:'scroll'}}>
         {filteredUsers.map((user) => (
           <li
             key={user._id}
@@ -63,4 +60,4 @@ const UserList = ({ onSelectUser }) => {
   );
 };
 
-export default UserList;
+export default OtherUsers;

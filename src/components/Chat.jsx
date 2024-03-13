@@ -103,13 +103,19 @@ const Chat = () => {
         <div className="col-lg-4 col-sm-4">
           <UserList onSelectUser={handleUserSelect} />
         </div>
-        <div className="col-lg-8 col-sm-8">
+        <div
+          className="col-lg-8 col-sm-8"
+          style={{
+            borderLeft: "1px solid",
+            borderTop: "0",
+            borderRight: "0",
+            borderBottom: "0",
+          }}
+        >
           <ScrollToBottom className="scroll-container">
             {selectedUser && (
               <div className="mt-3">
-                <h2 className="mb-3 text-center ">
-                  Chat with {selectedUser.name}
-                </h2>
+                <h2 className="mb-3 text-center ">{selectedUser.name}</h2>
                 <div
                   className="chat-box"
                   style={{
@@ -144,6 +150,7 @@ const Chat = () => {
                 <div className="input-group mt-3 mb-3">
                   <input
                     type="text"
+                    style={{ border: "3px solid" }}
                     className="form-control"
                     value={newMessage}
                     ref={inputRef}
