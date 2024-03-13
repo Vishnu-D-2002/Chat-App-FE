@@ -413,20 +413,16 @@
     color: #667370;
 }
 
-/* CSS file for styling chat messages */
-
-/* Container for messages */
 .chat-box {
     padding: 10px;
 }
 
-/* Individual message styling */
 .sent {
     margin-left: auto;
     background-color: #DCF8C6;
     padding: 5px 10px;
     border-radius: 10px;
-    max-width: 70%;
+    max-width: fit-content;
 }
 
 .received {
@@ -434,16 +430,14 @@
     background-color: #ECEFF1;
     padding: 5px 10px;
     border-radius: 10px;
-    max-width: 70%;
+    max-width: fit-content;
 }
 
-/* Style for message content */
 .message-content {
     word-wrap: break-word;
 }
 
-/* Style for time ago */
 .sub {
-    font-size: 12px;
+    font-size: 10px;
     color: gray;
 }

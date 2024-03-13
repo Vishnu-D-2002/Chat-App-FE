@@ -120,7 +120,7 @@ const Login = () => {
   return (
     <div className=" container-fluid color bg-dark ">
       <section className="forms-section">
-        <h1 className="section-title mt-4">Welcome to CRM</h1>
+        <h1 className="section-title mt-4">Welcome to Live Chat</h1>
         <div className="forms">
           <div
             className={`form-wrapper ${
