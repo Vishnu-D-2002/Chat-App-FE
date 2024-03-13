@@ -89,16 +89,23 @@ const Login = () => {
     try {
       const user = await authInstance.post("/login", loginData);
       sessionStorage.setItem("User", JSON.stringify(user.data));
+      let Users = JSON.parse(sessionStorage.getItem('User'));
       setLoading(false);
       setMsg1(user.data.message);
       console.log("login Done", user.data);
-      if (msg1 == "Password is incorrect" || msg1 == "User not found!") {
-        sessionStorage.clear();
-        setLoading(false);
-        setMsg1("Password is incorrect or User not found!");
-      } else {
-          navigate("/chat");
+      if (Users.message === "No Users found") {
+        setMsg1("Click Activate button send to your Mail then login");
       }
+       else if (
+         Users.message == "Password is wrong" ||
+         Users.message == "User not found!"
+       ) {
+         sessionStorage.clear();
+         setLoading(false);
+         setMsg1("Password is incorrect or User not found!");
+       } else {
+         navigate("/chat");
+       }
       setLoginData({
         email: "",
         password: "",

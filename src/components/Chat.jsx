@@ -3,8 +3,10 @@ import axios from "axios";
 import io from "socket.io-client";
 import UserList from "./UserList";
 import ScrollToBottom from "react-scroll-to-bottom";
-import TimeAgo from "react-timeago"; // Import TimeAgo component
+import TimeAgo from "react-timeago"; 
 import moment from "moment";
+import '../App.css'
+import Navlink from "./Navbar/Navbar";
 
 const socket = io.connect("http://localhost:3000");
 
@@ -88,7 +90,7 @@ const Chat = () => {
 
   return (
     <div className="container bg-dark-subtle">
-      <h1 className="mt-4">Chat Application</h1>
+      <Navlink />
       <div className="row">
         <div className="col-lg-4 col-sm-4">
           <UserList onSelectUser={handleUserSelect} />
@@ -96,25 +98,38 @@ const Chat = () => {
         <div className="col-lg-8 col-sm-8">
           <ScrollToBottom className="scroll-container">
             {selectedUser && (
-              <div>
-                <h2>Chat with {selectedUser.name}</h2>
+              <div className="mt-3">
+                <h2 className="mb-3 text-center ">
+                  Chat with {selectedUser.name}
+                </h2>
                 <div
                   className="chat-box"
-                  style={{ maxHeight: "440px", overflowY: "scroll" }}
+                  style={{
+                    minHeight: "440px",
+                    maxHeight: "440px",
+                    overflowY: "scroll",
+                  }}
                 >
                   {messages.map((message) => (
                     <div
                       key={message._id}
                       className={
-                        message.sender === currentUser ? "sent" : "received"
+                        message.sender._id === currentUser ||
+                        message.sender === currentUser
+                          ? "sent mt-2 mb-2"
+                          : "received mt-2 mb-2"
                       }
                     >
-                      <div className="message-content">
-                        <strong>{message.sender.name}:</strong>{" "}
-                        {message.message}
-                        <sub>
-                          <TimeAgo date={moment(message.createdAt)} />
-                        </sub>{" "}
+                      <div className="message-content d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
+                          {message.message}
+                        </div>
+                        <br />
+                        <div className="text-end">
+                          <sub>
+                            <TimeAgo date={moment(message.createdAt)} />
+                          </sub>
+                        </div>
                       </div>
                     </div>
                   ))}
