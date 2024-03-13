@@ -27,20 +27,44 @@ function ResetPassword() {
     }
   };
   return (
-    <div>
-      <h1>Enter the New Password to reset the old Password </h1>
-
-      <form onSubmit={handleNewPassword}>
-        <label>New Password : </label>
-        <input
-          type="password"
-          placeholder="New Password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Change Password</button>
-      </form>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-header">
+              <h1 className="text-center">
+                Enter the New Password to reset your old Password
+              </h1>
+            </div>
+            <div className="card-body">
+              <form onSubmit={handleNewPassword}>
+                <div className="form-group">
+                  <label htmlFor="newPassword" className="m-2">
+                    <strong>New Password:</strong>
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control m-2 mb-3"
+                    id="newPassword"
+                    placeholder="New Password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className=" d-flex flex-column">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-block mx-auto "
+                  >
+                    Change Password
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

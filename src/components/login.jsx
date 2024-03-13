@@ -54,26 +54,28 @@ const Login = () => {
       const res = await authInstance.post("/", signupData);
 
       if (res.data) {
-        // console.log('User Registered successfully ', res.data);
+        console.log('User Registered successfully ', res.data.message);
 
         const email = signupData.email;
+        if (res.data.message === "Activation Mail Sent Successfull to your Mail") {
+          const activationMail = await authInstance.post(
+            `/link/${email}`,
+            { email }
+          );
+          if (activationMail) {
+            setLoading(false);
 
-        const activationMail = await authInstance.post(
-          `/link/${email}`,
-          { email }
-        );
-        if (activationMail) {
-          setLoading(false);
-
-          setSignupData({
-            name: "",
-            email: "",
-            password: "",
-            userRole: "customer",
-          });
-          return setMsg("Activation Mail Sent Successfull to your Mail");
+            setSignupData({
+              name: "",
+              email: "",
+              password: "",
+              userRole: "customer",
+            });
+            return setMsg(res.data.message);
+          }
         } else {
-          return setMsg("Can't sent Activation Link");
+          setLoading(false);
+          return setMsg(res.data.message);
         }
       }
     } catch (error) {
