@@ -111,6 +111,7 @@ const Chat = () => {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       sendMessage();
+      scrollToBottom();
     }
   };
 
@@ -195,7 +196,7 @@ const Chat = () => {
                         </div>
                         <br />
                         <div className="text-end">
-                          <sub>{renderTimeAgo(message.createdAt)}</sub>
+                          <sub className="mx-2">{renderTimeAgo(message.createdAt)}</sub>
                         </div>
                       </div>
                     </div>
