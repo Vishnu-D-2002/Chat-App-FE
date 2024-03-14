@@ -12,7 +12,10 @@ const socket = io.connect("https://chat-app-be-78gg.onrender.com/");
 const Chat = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [messages, setMessages] = useState([]);
+
+  // Change state structure to hold messages for each pair of users
+  const [messageHistory, setMessageHistory] = useState({});
+
   const [newMessage, setNewMessage] = useState("");
   const messagesEndRef = useRef(null);
   const inputRef = useRef();
@@ -37,7 +40,18 @@ const Chat = () => {
       socket.emit("join", currentUser);
 
       socket.on("message", (message) => {
-        setMessages((prevMessages) => [...prevMessages, message]);
+        // Update the message history for the corresponding pair of users
+        const senderId = message.sender;
+        const receiverId = message.receiver;
+        setMessageHistory((prevMessageHistory) => {
+          const key =
+            senderId < receiverId
+              ? `${senderId}-${receiverId}`
+              : `${receiverId}-${senderId}`;
+          const updatedHistory = { ...prevMessageHistory };
+          updatedHistory[key] = [...(updatedHistory[key] || []), message];
+          return updatedHistory;
+        });
       });
     }
   }, [currentUser]);
@@ -46,10 +60,18 @@ const Chat = () => {
     const fetchMessages = async () => {
       try {
         if (currentUser && selectedUser) {
+          const key =
+            currentUser < selectedUser._id
+              ? `${currentUser}-${selectedUser._id}`
+              : `${selectedUser._id}-${currentUser}`;
           const response = await axios.get(
             `https://chat-app-be-78gg.onrender.com/msg/${currentUser}/${selectedUser._id}`
           );
-          setMessages(response.data);
+          // Update message history for this pair of users
+          setMessageHistory((prevMessageHistory) => ({
+            ...prevMessageHistory,
+            [key]: response.data,
+          }));
         }
       } catch (error) {
         console.error("Error fetching messages:", error);
@@ -61,27 +83,42 @@ const Chat = () => {
 
   const handleUserSelect = (user) => {
     setSelectedUser(user);
-    setMessages([]);
+    setNewMessage("");
+    scrollToBottom();
   };
 
   const sendMessage = () => {
-    if (newMessage.trim() !== "") {
+    if (newMessage.trim() !== "" && currentUser && selectedUser) {
       const newMessageObj = {
         sender: currentUser,
         receiver: selectedUser._id,
         message: newMessage,
         createdAt: new Date().toISOString(),
       };
-      setMessages((prevMessages) => [...prevMessages, newMessageObj]);
+      // Update the message history for the corresponding pair of users
+      const key =
+        currentUser < selectedUser._id
+          ? `${currentUser}-${selectedUser._id}`
+          : `${selectedUser._id}-${currentUser}`;
+      setMessageHistory((prevMessageHistory) => ({
+        ...prevMessageHistory,
+        [key]: [...(prevMessageHistory[key] || []), newMessageObj],
+      }));
       socket.emit("sendMessage", newMessageObj);
       setNewMessage("");
       inputRef.current.focus();
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messageHistory, selectedUser]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -124,11 +161,17 @@ const Chat = () => {
                     overflowY: "scroll",
                   }}
                 >
-                  {messages.map((message) => (
+                  {/* Render messages for the selected pair of users */}
+                  {(
+                    messageHistory[
+                      currentUser < selectedUser._id
+                        ? `${currentUser}-${selectedUser._id}`
+                        : `${selectedUser._id}-${currentUser}`
+                    ] || []
+                  ).map((message) => (
                     <div
                       key={message._id}
                       className={
-                        message.sender._id === currentUser ||
                         message.sender === currentUser
                           ? "sent mt-2 mb-2"
                           : "received mt-2 mb-2"
@@ -155,6 +198,7 @@ const Chat = () => {
                     value={newMessage}
                     ref={inputRef}
                     onChange={(e) => setNewMessage(e.target.value)}
+                    onKeyPress={handleKeyPress} // Call sendMessage on Enter key press
                   />
                   <div className="input-group-append">
                     <button
