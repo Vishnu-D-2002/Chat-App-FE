@@ -50,7 +50,7 @@ const UserList = ({ onSelectUser }) => {
       />
       <ul
         className="list-group mb-3"
-        style={{ maxHeight: "200px", overflowY: "scroll" }}
+        style={{ minHeight: "200px", maxHeight: "200px", overflowY: "scroll" }}
       >
         {filteredUsers.map((user) => (
           <li

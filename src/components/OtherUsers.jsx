@@ -36,7 +36,7 @@ const OtherUsers = ({ onSelectUser }) => {
 
   return (
     <div>
-      <h3  className="mt-2">All Users</h3>
+      <h3 className="mt-2">All Users</h3>
       <input
         type="text"
         style={{ border: "3px solid" }}
@@ -45,7 +45,10 @@ const OtherUsers = ({ onSelectUser }) => {
         value={searchTerm}
         onChange={handleInputChange}
       />
-      <ul className="list-group mb-3" style={{maxHeight:'200px',overflowY:'scroll'}}>
+      <ul
+        className="list-group mb-3"
+        style={{ minHeight: "200px", maxHeight: "200px", overflowY: "scroll" }}
+      >
         {filteredUsers.map((user) => (
           <li
             key={user._id}

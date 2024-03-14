@@ -171,7 +171,8 @@ const Chat = () => {
                     <div
                       key={message._id}
                       className={
-                        message.sender === currentUser
+                        message.sender === currentUser ||
+                        message.sender._id === currentUser
                           ? "sent mt-2 mb-2"
                           : "received mt-2 mb-2"
                       }
@@ -197,7 +198,7 @@ const Chat = () => {
                     value={newMessage}
                     ref={inputRef}
                     onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyPress={handleKeyPress} 
+                    onKeyPress={handleKeyPress}
                   />
                   <div className="input-group-append">
                     <button
