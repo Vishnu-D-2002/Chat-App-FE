@@ -104,6 +104,7 @@ const Chat = () => {
       socket.emit("sendMessage", newMessageObj);
       setNewMessage("");
       inputRef.current.focus();
+      scrollToBottom();
     }
   };
 
