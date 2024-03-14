@@ -156,12 +156,11 @@ const Chat = () => {
                 <div
                   className="chat-box"
                   style={{
-                    minHeight: "440px",
+                    minHeight: "500px",
                     maxHeight: "440px",
                     overflowY: "scroll",
                   }}
                 >
-                  {/* Render messages for the selected pair of users */}
                   {(
                     messageHistory[
                       currentUser < selectedUser._id
@@ -198,7 +197,7 @@ const Chat = () => {
                     value={newMessage}
                     ref={inputRef}
                     onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyPress={handleKeyPress} // Call sendMessage on Enter key press
+                    onKeyPress={handleKeyPress} 
                   />
                   <div className="input-group-append">
                     <button

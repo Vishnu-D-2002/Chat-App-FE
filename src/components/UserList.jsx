@@ -48,7 +48,10 @@ const UserList = ({ onSelectUser }) => {
         value={searchTerm}
         onChange={handleInputChange}
       />
-      <ul className="list-group mb-3">
+      <ul
+        className="list-group mb-3"
+        style={{ maxHeight: "200px", overflowY: "scroll" }}
+      >
         {filteredUsers.map((user) => (
           <li
             key={user._id}
