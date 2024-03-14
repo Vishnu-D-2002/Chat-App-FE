@@ -6,7 +6,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import moment from "moment";
 import "../App.css";
 import Navlink from "./Navbar/Navbar";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaTelegramPlane } from "react-icons/fa";
 
 const socket = io.connect("https://chat-app-be-78gg.onrender.com/");
 
@@ -217,7 +217,7 @@ const Chat = () => {
                       type="button"
                       onClick={sendMessage}
                     >
-                      ⩥
+                      <FaTelegramPlane />
                     </button>
                   </div>
                 </div>
