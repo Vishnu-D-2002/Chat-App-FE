@@ -6,17 +6,16 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import moment from "moment";
 import "../App.css";
 import Navlink from "./Navbar/Navbar";
+import { FaArrowLeft } from "react-icons/fa";
 
 const socket = io.connect("https://chat-app-be-78gg.onrender.com/");
 
 const Chat = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
-
-  // Change state structure to hold messages for each pair of users
   const [messageHistory, setMessageHistory] = useState({});
-
   const [newMessage, setNewMessage] = useState("");
+  const [showChat, setShowChat] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef();
 
@@ -40,7 +39,6 @@ const Chat = () => {
       socket.emit("join", currentUser);
 
       socket.on("message", (message) => {
-        // Update the message history for the corresponding pair of users
         const senderId = message.sender;
         const receiverId = message.receiver;
         setMessageHistory((prevMessageHistory) => {
@@ -67,7 +65,6 @@ const Chat = () => {
           const response = await axios.get(
             `https://chat-app-be-78gg.onrender.com/msg/${currentUser}/${selectedUser._id}`
           );
-          // Update message history for this pair of users
           setMessageHistory((prevMessageHistory) => ({
             ...prevMessageHistory,
             [key]: response.data,
@@ -83,6 +80,7 @@ const Chat = () => {
 
   const handleUserSelect = (user) => {
     setSelectedUser(user);
+    setShowChat(true);
     setNewMessage("");
     scrollToBottom();
   };
@@ -95,7 +93,6 @@ const Chat = () => {
         message: newMessage,
         createdAt: new Date().toISOString(),
       };
-      // Update the message history for the corresponding pair of users
       const key =
         currentUser < selectedUser._id
           ? `${currentUser}-${selectedUser._id}`
@@ -133,15 +130,29 @@ const Chat = () => {
     }
   };
 
+  const handleBackClick = () => {
+    setSelectedUser(null);
+    setShowChat(false);
+  };
+
   return (
     <div className="container bg-dark-subtle">
       <Navlink />
       <div className="row">
-        <div className="col-lg-4 col-sm-4">
+        {showChat && (
+          <div className="col-12 d-sm-none">
+            <button className="btn" onClick={handleBackClick}>
+              <FaArrowLeft />
+            </button>
+          </div>
+        )}
+        <div
+          className={`col-lg-4 col-sm-4 ${showChat ? "d-none d-sm-block" : ""}`}
+        >
           <UserList onSelectUser={handleUserSelect} />
         </div>
         <div
-          className="col-lg-8 col-sm-8"
+          className={`col-lg-8 col-sm-8 ${showChat ? "" : "d-none d-sm-block"}`}
           style={{
             borderLeft: "1px solid",
             borderTop: "0",
