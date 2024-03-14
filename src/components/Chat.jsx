@@ -170,7 +170,8 @@ const Chat = () => {
                   ).map((message) => (
                     <div
                       key={message._id}
-                      className={    
+                      className={
+                        message.sender === currentUser ||
                         message.sender._id === currentUser
                           ? "sent mt-2 mb-2"
                           : "received mt-2 mb-2"
