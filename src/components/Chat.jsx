@@ -82,7 +82,6 @@ const Chat = () => {
     setSelectedUser(user);
     setShowChat(true);
     setNewMessage("");
-    scrollToBottom();
   };
 
   const sendMessage = () => {
@@ -104,20 +103,19 @@ const Chat = () => {
       socket.emit("sendMessage", newMessageObj);
       setNewMessage("");
       inputRef.current.focus();
-      scrollToBottom();
     }
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       sendMessage();
-      scrollToBottom();
     }
   };
-
   useEffect(() => {
-    scrollToBottom();
-  }, [messageHistory, selectedUser]);
+    if (showChat) {
+      scrollToBottom();
+    }
+  }, [messageHistory, selectedUser, showChat]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -196,7 +194,9 @@ const Chat = () => {
                         </div>
                         <br />
                         <div className="text-end">
-                          <sub className="mx-2">{renderTimeAgo(message.createdAt)}</sub>
+                          <sub className="mx-2">
+                            {renderTimeAgo(message.createdAt)}
+                          </sub>
                         </div>
                       </div>
                     </div>
