@@ -2,15 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { authInstance } from "../services/instance";
 import Navlink from "./Navbar/Navbar";
-
+import { ColorRing } from "react-loader-spinner";
 function PasswordReset() {
   const [email, setEmail] = useState("");
   const [mgs, setMgs] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSendOTP = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await authInstance.post("/reset-password", { email });
+      setLoading(false);
       setMgs(res.data.message);
       setEmail("");
     } catch (error) {

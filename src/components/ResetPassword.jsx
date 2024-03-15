@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import { authInstance } from "../services/instance";
+import { ColorRing } from "react-loader-spinner";
 
 function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -16,7 +18,11 @@ function ResetPassword() {
 
       // console.log(randomString,newPassword);
 
+      setLoading(true);
+
       await authInstance.post("/new-password", { randomString, newPassword });
+
+      setLoading(false);
 
       // console.log('Password changed successfull');
 
@@ -53,12 +59,35 @@ function ResetPassword() {
                   />
                 </div>
                 <div className=" d-flex flex-column">
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-block mx-auto "
-                  >
-                    Change Password
-                  </button>
+                  {loading ? (
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-block mx-auto "
+                    >
+                      <ColorRing
+                        visible={true}
+                        height="40"
+                        width="40"
+                        ariaLabel="color-ring-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="color-ring-wrapper"
+                        colors={[
+                          "#abbd81",
+                          "#f8b26a",
+                          "#849b87",
+                          "#e15b64",
+                          "#f47e60",
+                        ]}
+                      />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-block mx-auto "
+                    >
+                      Change Password
+                    </button>
+                  )}
                 </div>
               </form>
             </div>
