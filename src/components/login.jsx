@@ -54,7 +54,7 @@ const Login = () => {
       const res = await authInstance.post("/", signupData);
 
       if (res.data) {
-        console.log('User Registered successfully ', res.data.message);
+        // console.log('User Registered successfully ', res.data.message);
 
         const email = signupData.email;
         if (res.data.message === "Activation Mail Sent Successfull to your Mail") {
@@ -94,7 +94,7 @@ const Login = () => {
       let Users = JSON.parse(sessionStorage.getItem('User'));
       setLoading(false);
       setMsg1(user.data.message);
-      console.log("login Done", user.data);
+      // console.log("login Done", user.data);
       if (Users.message === "No Users found") {
         setMsg1("Click Activate button send to your Mail then login");
       }

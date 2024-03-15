@@ -14,11 +14,11 @@ function ResetPassword() {
 
       const randomString = window.location.pathname.slice(-7);
 
-      console.log(randomString,newPassword);
+      // console.log(randomString,newPassword);
 
       await authInstance.post("/new-password", { randomString, newPassword });
 
-      console.log('Password changed successfull');
+      // console.log('Password changed successfull');
 
       setNewPassword("");
       navigate("/");
