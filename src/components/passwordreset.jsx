@@ -39,12 +39,35 @@ function PasswordReset() {
                 required
               />
               <div className="d-flex">
-                <button
-                  type="submit"
-                  className="submit mt-3 mx-auto  rounded bg-transparent"
-                >
-                  Send Reset Link
-                </button>
+                {loading ? (
+                  <button
+                    type="submit"
+                    className="submit mt-3 mx-auto  rounded bg-transparent"
+                  >
+                    <ColorRing
+                      visible={true}
+                      height="40"
+                      width="40"
+                      ariaLabel="color-ring-loading"
+                      wrapperStyle={{}}
+                      wrapperClass="color-ring-wrapper"
+                      colors={[
+                        "#abbd81",
+                        "#f8b26a",
+                        "#849b87",
+                        "#e15b64",
+                        "#f47e60",
+                      ]}
+                    />
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="submit mt-3 mx-auto  rounded bg-transparent"
+                  >
+                    Send Reset Link
+                  </button>
+                )}
                 <p className="message mt-3 fs-2 text-danger ">{mgs}</p>
               </div>
             </div>
