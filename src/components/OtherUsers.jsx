@@ -55,6 +55,16 @@ const OtherUsers = ({ onSelectUser }) => {
             className="list-group-item list-group-item-action"
             onClick={() => onSelectUser(user)}
           >
+            <img
+              src={user.image}
+              alt="Profile"
+              style={{
+                marginRight: "10px",
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+              }}
+            />
             {user.name}
           </li>
         ))}

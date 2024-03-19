@@ -3,6 +3,7 @@ import "../App.css";
 import { ColorRing } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import { authInstance } from "../services/instance";
+import { BsPerson } from "react-icons/bs"; 
 
 const Login = () => {
   const [activeForm, setActiveForm] = useState("login");
@@ -255,7 +256,7 @@ const Login = () => {
                     name="name"
                     required
                     value={signupData.name}
-                    onChange={handleSignupChange('name')}
+                    onChange={handleSignupChange("name")}
                   />
                 </div>
                 <div className="input-block">
@@ -266,7 +267,7 @@ const Login = () => {
                     name="email"
                     required
                     value={signupData.email}
-                    onChange={handleSignupChange('email')}
+                    onChange={handleSignupChange("email")}
                   />
                 </div>
                 <div className="input-block">
@@ -277,19 +278,25 @@ const Login = () => {
                     name="password"
                     required
                     value={signupData.password}
-                    onChange={handleSignupChange('password')}
+                    onChange={handleSignupChange("password")}
                   />
                 </div>
                 <div className="input-block">
-                  <label htmlFor="signup-image">Password</label>
-                  <input
-                    id="signup-image"
-                    type="file"
-                    name="image"
-                    required
-                    // value={signupData.image}
-                    onChange={handleSignupChange('image')}
-                  />
+                  <label htmlFor="signup-image" className="fs-5">
+                    <strong  style={{fontSize:'39px'}}>
+                      <BsPerson />
+                    </strong>
+                    Add Profile Pic
+                    <input
+                      id="signup-image"
+                      type="file"
+                      name="image"
+                      required
+                      // value={signupData.image}
+                      onChange={handleSignupChange("image")}
+                      style={{ display: "none" }}
+                    />
+                  </label>
                 </div>
                 {/* <img className="img-fluid" width={50} src={signupData.image} alt="" /> */}
               </fieldset>
