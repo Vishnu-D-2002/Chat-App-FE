@@ -21,7 +21,24 @@ const Login = () => {
     name: "",
     email: "",
     password: "",
+    image:"",
   });
+
+  // convert to base64 in this way.
+  //  const handleImage = (e) => {
+  //    const file = e.target.files[0];
+  //    setFileToBase(file);
+  //    console.log(file);
+  //  };
+
+  //  const setFileToBase = (file) => {
+  //    const reader = new FileReader();
+  //    reader.readAsDataURL(file);
+  //    reader.onloadend = () => {
+  //      setImage(reader.result);
+  //    };
+  // };
+  // console.log(image);
 
   const switchForm = (formType) => {
     setActiveForm(formType);
@@ -35,13 +52,11 @@ const Login = () => {
     });
   };
 
-  const handleSignupChange = (e) => {
-    const { name, value } = e.target;
-    setSignupData({
-      ...signupData,
-      [name] : value,
-    });
+  const handleSignupChange =(name)=> (e) => {
+    const value = name === "image" ? e.target.files[0] : e.target.value;
+    setSignupData({ ...signupData, [name]: value });
   };
+
 
   const signupSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +66,13 @@ const Login = () => {
     try {
       // console.log('Registering the User...');
 
-      const res = await authInstance.post("/", signupData);
+      let formData = new FormData();
+      formData.append("image", signupData.image);
+      formData.append("name", signupData.name);
+      formData.append("email", signupData.email);
+      formData.append("password", signupData.password);
+
+      const res = await authInstance.post("/",formData);
 
       if (res.data) {
         // console.log('User Registered successfully ', res.data.message);
@@ -69,7 +90,7 @@ const Login = () => {
               name: "",
               email: "",
               password: "",
-              userRole: "customer",
+              image:"",
             });
             return setMsg(res.data.message);
           }
@@ -234,7 +255,7 @@ const Login = () => {
                     name="name"
                     required
                     value={signupData.name}
-                    onChange={handleSignupChange}
+                    onChange={handleSignupChange('name')}
                   />
                 </div>
                 <div className="input-block">
@@ -245,7 +266,7 @@ const Login = () => {
                     name="email"
                     required
                     value={signupData.email}
-                    onChange={handleSignupChange}
+                    onChange={handleSignupChange('email')}
                   />
                 </div>
                 <div className="input-block">
@@ -256,10 +277,21 @@ const Login = () => {
                     name="password"
                     required
                     value={signupData.password}
-                    onChange={handleSignupChange}
+                    onChange={handleSignupChange('password')}
                   />
                 </div>
-                
+                <div className="input-block">
+                  <label htmlFor="signup-image">Password</label>
+                  <input
+                    id="signup-image"
+                    type="file"
+                    name="image"
+                    required
+                    // value={signupData.image}
+                    onChange={handleSignupChange('image')}
+                  />
+                </div>
+                {/* <img className="img-fluid" width={50} src={signupData.image} alt="" /> */}
               </fieldset>
               {<h3>{msg}</h3>}
               <div>
