@@ -291,7 +291,7 @@ const Login = () => {
                       id="signup-image"
                       type="file"
                       name="image"
-                      required
+                      // required
                       // value={signupData.image}
                       onChange={handleSignupChange("image")}
                       style={{ display: "none" }}
