@@ -97,12 +97,24 @@ const Login = () => {
           }
         } else {
           setLoading(false);
+          setSignupData({
+            name: "",
+            email: "",
+            password: "",
+            image: "",
+          });
           return setMsg(res.data.message);
         }
       }
     } catch (error) {
       setLoading(false);
-      return setMsg("Error While SigningUp", error);
+      setSignupData({
+        name: "",
+        email: "",
+        password: "",
+        image: "",
+      });
+      return setMsg("Existing Email or Error occured", error);
     }
   };
 
