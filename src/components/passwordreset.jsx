@@ -17,6 +17,7 @@ function PasswordReset() {
       setMgs(res.data.message);
       setEmail("");
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };

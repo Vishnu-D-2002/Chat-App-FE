@@ -36,8 +36,8 @@ const Profile = () => {
   const handleUpdate = async () => {
     try {
       const formData = new FormData();
-      formData.append("name", name);
-      formData.append("email", email);
+      formData.append("name", name||user.name);
+      formData.append("email", email||user.email);
       formData.append("image", file);
 
       const response = await authInstance.put(`/users/${userId}`, formData, {
@@ -48,6 +48,9 @@ const Profile = () => {
 
       setUser(response.data.user);
       setEditMode(false);
+      setName('');
+      setEmail('');
+      setFile(null);
     } catch (error) {
       setError(error.message);
     }
@@ -58,7 +61,11 @@ const Profile = () => {
   };
 
   if (loading) {
-    return <div className="container">Loading...</div>;
+    return (
+        <div className="container fs-4 text-center mt-5 ">
+          Loading...
+        </div>
+    );
   }
 
   if (error) {
