@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { authInstance } from "../services/instance";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navlink from "./Navbar/Navbar";
@@ -48,6 +49,7 @@ const Profile = () => {
 
       setUser(response.data.user);
       setEditMode(false);
+      toast.success("Profile Updated Successfully");
       setName('');
       setEmail('');
       setFile(null);
@@ -75,6 +77,7 @@ const Profile = () => {
   return (
     <>
       <Navlink />
+      <ToastContainer />
       <div className="container d-flex justify-content-center align-items-center vh-100 bg-dark-subtle ">
         <div className="card w-75">
           <div className="card-body">
