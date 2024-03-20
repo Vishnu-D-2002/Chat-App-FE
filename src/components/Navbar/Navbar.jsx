@@ -22,6 +22,9 @@ function Navlink() {
             <Link to="/chat">Chats</Link>
           </li>
           <li>
+            <Link to="/profile">Profile</Link>
+          </li>
+          <li>
             <Link to="/password-reset">Change password</Link>
           </li>
           <li>

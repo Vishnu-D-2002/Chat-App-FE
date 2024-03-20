@@ -6,6 +6,7 @@ import Active from "./components/active";
 import ResetPassword from "./components/ResetPassword";
 import EmailSend from "./components/EmailSend";
 import PasswordReset from "./components/passwordreset";
+import Profile from "./components/Profile";
 
 const App = () => {
   
@@ -15,6 +16,7 @@ const App = () => {
       <div>
         <Routes>
           <Route path="/chat" element={<Chat />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Login />} />
           <Route path="/emailSend" element={<EmailSend />} />
           <Route
